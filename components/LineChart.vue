@@ -41,6 +41,21 @@
         required: true
       }
     },
+    methods: {
+      requestData () {
+      axios.get(`https://api.npmjs.org/downloads/range/${this.period}/${this.package}`)
+      .then(response => {
+        this.downloads = response.data.downloads.map(download => download.downloads)
+        this.labels = response.data.downloads.map(download => download.day)
+        this.packageName = response.data.package
+        this.loaded = true
+      })
+      .catch(err => {
+        this.errorMessage = err.response.data.error
+        this.showError = true
+      })
+      }      
+    },
     data () {
       return {
         options: {
