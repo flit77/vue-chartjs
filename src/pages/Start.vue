@@ -31,8 +31,12 @@
 
 <script>
   import axios from 'axios'
+  import LineChart from '../components/LineChart.vue'
 
   export default {
+    components: {
+      'line-chart': LineChart
+    },
     data () {
       return {
         package: null,
