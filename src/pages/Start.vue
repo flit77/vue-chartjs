@@ -12,7 +12,7 @@
         <button class="Search__button" @click="requestData">Find</button>
       </div>
       <div class="error-message" v-if="showError">
-
+        There is an error
       </div>
       <hr>
       <h1 class="title" v-if="loaded"></h1>
@@ -50,7 +50,21 @@
       }
     },
     methods: {
+      setURL () {
+        history.pushState({info: `npm-stats ${this.package}`}, this.package, `/#/${this.package}`)
+      },
+      resetState () {
+        this.loaded = false
+        this.showError = false
+      },
       requestData () {
+        if (this.package === null ||
+            this.package === '' ||
+            this.package === undefined) {
+          this.showError = true
+          return
+        }
+        this.resetState()
         axios.get(`https://api.npmjs.org/downloads/range/${this.period}/${this.package}`)
         .then(response => {
           this.downloads = response.data.downloads.map(download => download.downloads)
