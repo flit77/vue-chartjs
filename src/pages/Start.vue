@@ -77,6 +77,12 @@
           this.showError = true
         })
       }
+    },
+    mounted () {
+      if (this.$route.params.package) {
+        this.package = this.$route.params.package
+        this.requestData()
+      }
     }
   }
 </script>
